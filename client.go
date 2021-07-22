@@ -224,8 +224,7 @@ func (w responseWriterImpl) Write(po ldap.ProtocolOp) {
 func (c *client) ProcessRequestMessage(message *ldap.LDAPMessage) {
 	defer c.wg.Done()
 
-	var m Message
-	m = Message{
+	m := Message{
 		LDAPMessage: message,
 		Done:        make(chan bool, 2),
 		Client:      c,

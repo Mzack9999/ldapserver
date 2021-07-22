@@ -54,7 +54,7 @@ func (r *route) Match(m *Message) bool {
 
 	switch v := m.ProtocolOp().(type) {
 	case ldap.BindRequest:
-		if r.uAuthChoice == true {
+		if r.uAuthChoice {
 			if strings.ToLower(v.AuthenticationChoice()) != r.sAuthChoice {
 				return false
 			}
@@ -68,19 +68,19 @@ func (r *route) Match(m *Message) bool {
 		return true
 
 	case ldap.SearchRequest:
-		if r.uBasedn == true {
+		if r.uBasedn {
 			if strings.ToLower(string(v.BaseObject())) != r.sBasedn {
 				return false
 			}
 		}
 
-		if r.uFilter == true {
+		if r.uFilter {
 			if strings.ToLower(v.FilterString()) != r.sFilter {
 				return false
 			}
 		}
 
-		if r.uScope == true {
+		if r.uScope {
 			if int(v.Scope()) != r.sScope {
 				return false
 			}
@@ -143,7 +143,7 @@ func (h *RouteMux) ServeLDAP(w ResponseWriter, r *Message) {
 	for _, route := range h.routes {
 
 		//if the route don't match, skip it
-		if route.Match(r) == false {
+		if route.Match(r) {
 			continue
 		}
 

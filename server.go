@@ -109,8 +109,6 @@ func (s *Server) serve() error {
 		s.wg.Add(1)
 		go cli.serve()
 	}
-
-	return nil
 }
 
 // Return a new session with the connection
