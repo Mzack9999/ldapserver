@@ -7,7 +7,7 @@ import (
 	"syscall"
 	"time"
 
-	ldap "github.com/vjeantet/ldapserver"
+	ldap "github.com/Mzack9999/ldapserver"
 )
 
 func main() {
@@ -69,5 +69,4 @@ func handleSearch(w ldap.ResponseWriter, m *ldap.Message) {
 func handleBind(w ldap.ResponseWriter, m *ldap.Message) {
 	res := ldap.NewBindResponse(ldap.LDAPResultSuccess)
 	w.Write(res)
-	return
 }
