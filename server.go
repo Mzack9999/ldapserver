@@ -2,6 +2,7 @@ package ldapserver
 
 import (
 	"bufio"
+	"errors"
 	"net"
 	"sync"
 	"time"
@@ -33,11 +34,12 @@ func NewServer() *Server {
 
 // Handle registers the handler for the server.
 // If a handler already exists for pattern, Handle panics
-func (s *Server) Handle(h Handler) {
+func (s *Server) Handle(h Handler) error {
 	if s.Handler != nil {
-		panic("LDAP: multiple Handler registrations")
+		return errors.New("LDAP: multiple Handler registrations")
 	}
 	s.Handler = h
+	return nil
 }
 
 // ListenAndServe listens on the TCP network address s.Addr and then
