@@ -143,7 +143,7 @@ func (h *RouteMux) ServeLDAP(w ResponseWriter, r *Message) {
 	for _, route := range h.routes {
 
 		//if the route don't match, skip it
-		if route.Match(r) {
+		if !route.Match(r) {
 			continue
 		}
 
