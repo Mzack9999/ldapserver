@@ -54,7 +54,6 @@ func (s *Server) ListenAndServe(addr string, options ...func(*Server)) error {
 	if e != nil {
 		return e
 	}
-	Logger.Printf("Listening on %s\n", addr)
 
 	for _, option := range options {
 		option(s)
@@ -76,7 +75,6 @@ func (s *Server) serve() error {
 	for {
 		select {
 		case <-s.chDone:
-			Logger.Print("Stopping server")
 			s.Listener.Close()
 			return nil
 		default:
@@ -137,7 +135,5 @@ func (s *Server) newClient(rwc net.Conn) (c *client, err error) {
 // In either case, when the LDAP session is terminated.
 func (s *Server) Stop() {
 	close(s.chDone)
-	Logger.Print("gracefully closing client connections...")
 	s.wg.Wait()
-	Logger.Print("all clients connection closed")
 }

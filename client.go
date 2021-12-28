@@ -62,7 +62,7 @@ func (c *client) serve() {
 	c.closing = make(chan bool)
 	if onc := c.srv.OnNewConnection; onc != nil {
 		if err := onc(c.rwc); err != nil {
-			Logger.Printf("Erreur OnNewConnection: %s", err)
+			Logger.Printf("Error OnNewConnection: %s", err)
 			return
 		}
 	}
