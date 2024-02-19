@@ -1,33 +1,11 @@
 package ldapserver
 
-import (
-	"io/ioutil"
-	"log"
-	"os"
-)
+type HandleLogFn func(host string, f string, v ...interface{})
 
-var Logger logger
+var HandleLogCallback HandleLogFn
 
-// Logger represents log.Logger functions from the standard library
-type logger interface {
-	Fatal(v ...interface{})
-	Fatalf(format string, v ...interface{})
-	Fatalln(v ...interface{})
-
-	Panic(v ...interface{})
-	Panicf(format string, v ...interface{})
-	Panicln(v ...interface{})
-
-	Print(v ...interface{})
-	Printf(format string, v ...interface{})
-	Println(v ...interface{})
+func log(host string, f string, v ...interface{}) {
+	if HandleLogCallback != nil {
+		HandleLogCallback(host, f, v...)
+	}
 }
-
-func init() {
-	Logger = log.New(os.Stdout, "", log.LstdFlags)
-}
-
-var (
-	// DiscardingLogger can be used to disable logging output
-	DiscardingLogger = log.New(ioutil.Discard, "", 0)
-)

@@ -25,7 +25,7 @@ type Server struct {
 	Handler Handler
 }
 
-//NewServer return a LDAP Server
+// NewServer return a LDAP Server
 func NewServer() *Server {
 	return &Server{
 		chDone: make(chan bool),
@@ -69,7 +69,7 @@ func (s *Server) serve() error {
 	defer s.Listener.Close()
 
 	if s.Handler == nil {
-		Logger.Panicln("No LDAP Request Handler defined")
+		panic("No LDAP Request Handler defined")
 	}
 
 	i := 0
@@ -94,7 +94,7 @@ func (s *Server) serve() error {
 			if opErr, ok := err.(*net.OpError); ok || opErr.Timeout() {
 				continue
 			}
-			Logger.Println(err)
+			log(rw.RemoteAddr().String(), err.Error())
 		}
 
 		cli, err := s.newClient(rw)
@@ -105,7 +105,7 @@ func (s *Server) serve() error {
 
 		i = i + 1
 		cli.Numero = i
-		Logger.Printf("Connection client [%d] from %s accepted", cli.Numero, cli.rwc.RemoteAddr().String())
+		log(cli.rwc.RemoteAddr().String(), "Connection client [%d] from %s accepted", cli.Numero, cli.rwc.RemoteAddr().String())
 		s.wg.Add(1)
 		go cli.serve()
 	}

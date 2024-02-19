@@ -14,8 +14,6 @@ import (
 func main() {
 
 	//ldap logger
-	ldap.Logger = log.New(os.Stdout, "[server] ", log.LstdFlags)
-
 	//Create a new LDAP Server
 	server := ldap.NewServer()
 
