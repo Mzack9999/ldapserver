@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	ldap "github.com/Mzack9999/ldapserver"
+	ldap "github.com/projectdiscovery/ldapserver"
 )
 
 func main() {

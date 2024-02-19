@@ -1,4 +1,4 @@
-module github.com/Mzack9999/ldapserver
+module github.com/projectdiscovery/ldapserver
 
 go 1.14
 
